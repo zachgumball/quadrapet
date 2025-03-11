@@ -80,8 +80,11 @@ const GalleryPage = () => {
           }
         } catch (error) {
           console.error("Error parsing response:", error);
-          const errorMessage = (error as Error).message;
-          toast.error(`Terjadi kesalahan saat mengunggah: ${errorMessage}`);
+          if (error instanceof Error) {
+            toast.error(`Terjadi kesalahan saat mengunggah: ${error.message}`);
+          } else {
+            toast.error("Terjadi kesalahan saat mengunggah.");
+          }
         }
       } else {
         console.error("Error uploading:", xhr.responseText);
@@ -118,12 +121,13 @@ const GalleryPage = () => {
       </Head>
       <div className="relative min-h-screen bg-gray-900 text-white">
         <Navbar />
-        <main className="container mx-auto py-16 px-6 pt-24">
+        <main className="container mx-auto py-16 px-6">
           <motion.h1
-            className="text-4xl font-bold text-center font-serif italic"
+            className="text-4xl font-bold text-center mt-10"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
+            style={{ fontFamily: "'Brush Script MT', cursive" }}
           >
             Galeri Persahabatan
           </motion.h1>
