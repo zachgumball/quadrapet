@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
-import { X, UploadCloud, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, UploadCloud, ChevronLeft, ChevronRight, List, Grid } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { ClipLoader } from "react-spinners";
 
 // Tipe data untuk gallery
 type Gallery = {
@@ -27,6 +28,7 @@ const GalleryPage = () => {
   const [description, setDescription] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedGallery, setSelectedGallery] = useState<Gallery | null>(null);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   useEffect(() => {
     const fetchGalleries = async () => {
@@ -118,6 +120,7 @@ const GalleryPage = () => {
     <>
       <Head>
         <title>Gallery | Quadrapet</title>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
       </Head>
       <div className="relative min-h-screen bg-gray-900 text-white">
         <Navbar />
@@ -127,9 +130,9 @@ const GalleryPage = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            style={{ fontFamily: "'Brush Script MT', cursive" }}
+            style={{ fontFamily: "'Pacifico', cursive" }} // Apply font only here
           >
-            Galeri Persahabatan
+            Galeri Foto
           </motion.h1>
           {session && (
             <div className="text-center mt-6">
@@ -141,29 +144,77 @@ const GalleryPage = () => {
               </button>
             </div>
           )}
+          <div className="flex justify-end mt-6">
+            <button
+              className={`p-2 rounded-md ${viewMode === "grid" ? "bg-blue-600" : "bg-gray-700"} text-white mr-2`}
+              onClick={() => setViewMode("grid")}
+            >
+              <Grid size={24} />
+            </button>
+            <button
+              className={`p-2 rounded-md ${viewMode === "list" ? "bg-blue-600" : "bg-gray-700"} text-white`}
+              onClick={() => setViewMode("list")}
+            >
+              <List size={24} />
+            </button>
+          </div>
           {loading ? (
-            <p className="text-center mt-10">Loading...</p>
-          ) : (
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {galleries.map((gallery) => (
-                <motion.div
-                  key={gallery._id}
-                  className="bg-gray-800 rounded-lg p-4 shadow-lg cursor-pointer hover:bg-gray-700 transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => handleGalleryClick(gallery)}
-                >
-                  <Image
-                    src={gallery.photos[0]}
-                    width={300}
-                    height={200}
-                    alt={`Thumbnail ${gallery.uploader}`}
-                    className="rounded-lg"
-                  />
-                  <h2 className="mt-4 text-xl font-semibold">{gallery.uploader}</h2>
-                  <p className="text-gray-300 text-sm">{gallery.description}</p>
-                </motion.div>
-              ))}
+            <div className="flex justify-center items-center mt-10">
+              <ClipLoader color="#ffffff" loading={loading} size={50} />
             </div>
+          ) : (
+            <>
+              {viewMode === "grid" ? (
+                <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                  {galleries.map((gallery) => (
+                    <motion.div
+                      key={gallery._id}
+                      className="bg-gray-800 rounded-lg p-4 shadow-lg cursor-pointer hover:bg-gray-700 transition-all"
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => handleGalleryClick(gallery)}
+                    >
+                      <div className="w-full h-48 relative">
+                        <Image
+                          src={gallery.photos[0]}
+                          layout="fill"
+                          objectFit="cover"
+                          alt={`Thumbnail ${gallery.uploader}`}
+                          className="rounded-lg"
+                        />
+                      </div>
+                      <h2 className="mt-4 text-xl font-semibold">{gallery.uploader}</h2>
+                      <p className="text-gray-300 text-sm">{gallery.description}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-10 space-y-8">
+                  {galleries.map((gallery) => (
+                    <motion.div
+                      key={gallery._id}
+                      className="bg-gray-800 rounded-lg p-4 shadow-lg cursor-pointer hover:bg-gray-700 transition-all flex"
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => handleGalleryClick(gallery)}
+                    >
+                      <div className="w-36 h-24 relative">
+                        <Image
+                          src={gallery.photos[0]}
+                          layout="fill"
+                          objectFit="cover"
+                          alt={`Thumbnail ${gallery.uploader}`}
+                          className="rounded-lg"
+                        />
+                      </div>
+                      <div className="ml-4">
+                        <h2 className="text-xl font-semibold">{gallery.uploader}</h2>
+                        <p className="text-gray-300 text-sm">{gallery.description}</p>
+                        <p className="text-gray-500 mt-2">{new Date(gallery.createdAt).toLocaleString()}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </main>
         <Footer />

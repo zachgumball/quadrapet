@@ -1,7 +1,14 @@
 {
+  "/_document": "pages/_document.js",
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/gallery": "pages/gallery.js"
+  "/about": "pages/about.html",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/api/gallery": "pages/api/gallery.js",
+  "/auth-redirect": "pages/auth-redirect.html",
+  "/gallery": "pages/gallery.html",
+  "/login": "pages/login.html",
+  "/": "pages/index.html",
+  "/api/gallery/upload": "pages/api/gallery/upload.js",
+  "/404": "pages/404.html"
 }
