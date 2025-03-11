@@ -36,12 +36,14 @@ export default NextAuth({
       if (user) {
         token.id = user.id.toString();
       }
+      console.log("JWT Callback - Token:", token);
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
       }
+      console.log("Session Callback - Session:", session);
       return session;
     },
   },

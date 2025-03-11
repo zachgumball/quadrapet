@@ -25,7 +25,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   console.log("✅ Session found:", session);
-  // console.log("✅ Session token:", session.accessToken);
 
   try {
     // Gunakan formidable untuk membaca file
