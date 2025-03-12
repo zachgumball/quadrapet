@@ -6,7 +6,7 @@ import Head from "next/head";
 
 const friends = [
   { name: "Heri", role: "Web Developer", image: "/friends/heri.jpg", description: "Si pengotak-atik kode, suka bikin proyek keren dan eksplor teknologi baru." },
-  { name: "Rodit", role: "Pencatat Kenangan", image: "/friends/rodit.jpg", description: "Si pengarsip perjalanan, memastikan setiap momen terekam dalam video dan foto." },
+  { name: "Rodit", role: "Masih menjadi mister🥶", image: "/friends/rodit.jpg", description: "Si... apa ya, bere nyaho coba aing." },
   { name: "Robi", role: "Petualang", image: "/friends/robi.jpg", description: "Si pecinta alam, selalu ngajakin naik gunung dan eksplor tempat baru." },
   { name: "Matin", role: "Penyemangat", image: "/friends/matin.jpg", description: "Si penyemangat yang jenaka, selalu menghibur di setiap perjalanan." },
 ];
