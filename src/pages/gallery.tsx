@@ -120,7 +120,6 @@ const GalleryPage = () => {
     <>
       <Head>
         <title>Gallery | Quadrapet</title>
-        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
       </Head>
       <div className="relative min-h-screen bg-gray-900 text-white">
         <Navbar />

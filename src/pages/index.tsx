@@ -6,9 +6,18 @@ import Image from "next/image";
 import Head from "next/head";
 import axios from "axios"; // Add axios import
 
+type Pokemon = {
+  name: string;
+  height: number;
+  weight: number;
+  sprites: {
+    front_default: string;
+  };
+};
+
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [pokemon, setPokemon] = useState<any>(null); // Add pokemon state
+  const [pokemon, setPokemon] = useState<Pokemon | null>(null); // Update type
 
   useEffect(() => {
     const handleResize = () => {
