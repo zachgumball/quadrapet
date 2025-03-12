@@ -100,14 +100,6 @@ const Home = () => {
               className="rounded-xl shadow-lg shadow-blue-500/30"
             />
           </motion.div>
-
-          {/* Tombol CTA */}
-          <motion.button
-            className="mt-8 px-6 py-3 bg-blue-600 text-white font-semibold text-lg rounded-lg shadow-md hover:bg-blue-500 transition-all duration-300"
-            whileTap={{ scale: 0.95 }}
-          >
-            Lihat Kenangan Kita
-          </motion.button>
         </main>
 
         <Footer />
