@@ -2,7 +2,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import Head from "next/head"; // 🔹 Import Head untuk title
+import Head from "next/head";
 
 const Login = () => {
   const { data: session } = useSession();

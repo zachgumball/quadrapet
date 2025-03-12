@@ -19,14 +19,17 @@ export default NextAuth({
         const user = await User.findOne({ email: credentials?.email });
 
         if (!user || !credentials?.password) {
+          console.log("❌ User not found or password not provided");
           throw new Error("Email atau password salah");
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password);
         if (!isValid) {
+          console.log("❌ Invalid password");
           throw new Error("Email atau password salah");
         }
 
+        console.log("✅ User authenticated:", user);
         return { id: user._id.toString(), name: user.username, email: user.email };
       },
     }),
