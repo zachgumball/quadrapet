@@ -4,9 +4,11 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Head from "next/head";
+import axios from "axios"; // Add axios import
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [pokemon, setPokemon] = useState<any>(null); // Add pokemon state
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,6 +31,20 @@ const Home = () => {
       }
     }
   }, [isMobile]);
+
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      try {
+        const response = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 151) + 1}`
+        );
+        setPokemon(response.data);
+      } catch (error) {
+        console.error("Error fetching Pokémon:", error);
+      }
+    };
+    fetchPokemon();
+  }, []);
 
   return (
     <>
@@ -100,6 +116,57 @@ const Home = () => {
               className="rounded-xl shadow-lg shadow-blue-500/30"
             />
           </motion.div>
+
+          {/* Pokémon Box */}
+          {pokemon && (
+            <motion.section
+              className="mt-16 w-full max-w-md bg-gray-800 p-4 rounded-lg shadow-lg"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            >
+              <div className="flex justify-center mb-2">
+                <Image
+                  src="/pokemon.png"
+                  alt="Pokémon Logo"
+                  width={120} 
+                  height={48}
+                />
+              </div>
+              <motion.p
+                className="text-lg capitalize"
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                {pokemon.name}
+              </motion.p>
+              <motion.img
+                src={pokemon.sprites.front_default}
+                alt={pokemon.name}
+                className="mx-auto"
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
+              <motion.p
+                className="text-lg"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                Height: {pokemon.height} decimetres
+              </motion.p>
+              <motion.p
+                className="text-lg"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                Weight: {pokemon.weight} hectograms
+              </motion.p>
+            </motion.section>
+          )}
         </main>
 
         <Footer />
