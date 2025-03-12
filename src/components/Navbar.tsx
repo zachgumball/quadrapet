@@ -12,7 +12,6 @@ const Navbar = () => {
     { text: "Home", path: "/" },
     { text: "Tentang Kami", path: "/about" },
     { text: "Galeri", path: "/gallery" },
-    { text: "Jurnal", path: "/journal" },
   ];
 
   return (
