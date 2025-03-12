@@ -18,7 +18,7 @@ const Login = () => {
       setFadeOut(true);
       setTimeout(() => router.replace("/"), 500);
     }
-  }, [session]);
+  }, [session, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -250,7 +250,7 @@ const GalleryPage = () => {
               <div className="flex flex-wrap gap-2 mt-4">
                 {selectedImages.map((image, index) => (
                   <div key={index} className="relative w-20 h-20">
-                    <img
+                    <Image
                       src={URL.createObjectURL(image)}
                       alt="Preview"
                       className="w-full h-full object-cover rounded-md border"
